@@ -1,0 +1,232 @@
+In this version, I have changed and enhanced many things I always wanted
+before I knew programming (no thanks Derek :)
+
+- The playlist has been completely reworked: your text files will now fly
+  through, your sound card will not snap, crackle and pop all the time like
+  before when it was opening and closing the sound channel all the time, it
+  won't bloat the memory anymore, and the CPU will only be used to decode
+  one buffer in advance.
+- You can now set a Volume and Amplification level! youhou!
+- You can now display the readable text and unreadable phonemes as they
+  are placed in the multimedia buffer!! yabadabadou!
+- You can now choose which sound card device Rsynth should use on the
+  command line, in addition of the default which is to use the default
+  sound device.
+- When the sound card device is grabbed off from us, Rsynth will now try
+  each 5 seconds to get it back, until it does, unless you kill it.  wow!
+  If you would like to have multiple voices, buy a better sound card. If you
+  have one, blame the author of the other program.
+- The help screen is now displayed using the standard output instead of the
+  error output (which is hardly redirectable to use with more.exe or to a
+  file).
+- The help screen hang has been fixed, I hope it won't cause any problems.
+- The 8 bit output has also been "enhanced".
+- 16 bit is now default (you should use 8 bit only when really needed as it
+  uses more CPU power than 16 bit and produces more noise).
+
+I haven't had any problems running it in OS/2 Warp 4 with FP5 on a GUS PnP
+running Manley drivers beta 29 and a Sound Blaster 32.  However, the GUS
+PnP makes less noise, and copes better with amplification distortion and
+playlist buffers.
+
+Here are the new options:
+
+-V [100]  Volume in %, this is the MMOS2 channel volume
+-a [1.0]  Amplification, over 10.0 you start to get serious distortion
+          and I don't recommend it for your sound card sake.
+-D [0]    Sound Card Device ID (0 = default device)
+
+-T        Text, show readable text
+-v        Verbose, show unreadable phonemes
+-i        If you like the annoying "ignore <garbage phonemes>" error
+          messages, specify this option
+
+I will also base my next completely new BackTalk on this version of Rsynth.
+Look for it soon!
+
+
+Legal stuff
+-----------
+
+This freeware product is used at your own risk, although it is highly
+improbable it can cause any damage.
+
+
+Acknowledgments
+---------------
+
+Thanks goes to people in #os2coders, and especially
+
+Julien Pierre <julienp@edify.com>  Un autre francais!  Ca s'en vient pas pire!
+open (his alias on #os2coders)
+Jeppe Cram <jcramon@kampsax.k-net.dk>
+
+
+Contacting the author
+---------------------
+
+Samuel Audet
+
+E-mail:    guardia@cam.org
+Homepage:  http://www.cam.org/~guardia
+IRC nick:  Guardian_ (be sure it is I before starting asking questions though)
+
+Snail Mail:
+
+   377, rue D'Argenteuil
+   Laval, Quebec
+   H7N 1P7   CANADA
+
+
+Derek's readme
+==============
+
+This is a rough port of Rsynth2.0, an English text -> speech app originally 
+written for a Sun Sparcstation.  With help from some very nice people,
+I have re-implemented say.exe to multithread playing the audio data
+and calculating the next phrase, with the result that readings of
+large files are now much smoother.  I have also eliminated the chipmunk
+problem, and so have removed the +C switch.  For those interested in 
+changing/improving the speech quality of this package, I have implemented
+a sayrc file, residing in the $HOME directory, that will allow a user
+to implement an entirely different set of Klatt Synthesizer Parameters
+for use by this package.  Installation and usage of this file is entirely
+optional.
+
+Rsynth, with just a little work, can be modified to become a Speech output 
+library, good for that talking Web Browser the world so desperately needs. 
+As a matter of fact, there's a print to Rsynth option in my Lynx/2 cfg file 
+right now.  Or maybe the IRC client that speaks......
+
+Using the Executables:
+
+There are three OS/2 executables in this Zip file. They are all written 
+with EMX/GCC, so you will need the EMXRT stuff to use them.  They are:
+
+Say.exe        - the actual text -> speech app
+
+mkdictdb.exe   - Makes the required Dictionary Database file from 
+                 an external Dictionary
+
+dlookup.exe    - Looks up Phonemes from the database Dictionary.
+
+Running Say.exe:
+
+Typing "Say --help" on the command line will show you all the command line 
+options.  The important ones for OS/2 are as follows:
+
+     -r samp rate  Valid values for this are 8, 11, 22, and 44. This is the
+                   sample rate used either for generating WAV files or 
+                   speaking directly. The default is 8 kHz.  The default 
+                   value should be used for creating AU files, any valid 
+                   value may be used for WAV file creation or speaking 
+                   directly.
+
+     +Q            Quiet mode - if specified on the command line, will not 
+                   speak to MMPM.
+
+     -b 16         This will specify 16 bit playback (for sound systems
+                   that can support this).  The default is 8 bit.       
+
+     -o filename   This saves a file in AU format. If you have installed 
+                   MMOS/2 AU sound support, you can then use PLAY.CMD to 
+                   listen to it.  AU sound support for MMOS/2 is part of 
+                   the Warp BonusPak - you will need to install  this if 
+                   you have yet to do so.
+
+     -w filename   This saves a file in WAV format.  All WAV files are 
+                   stored as 8 bit mono, until I can figure out how to 
+                   do otherwise.
+
+     -f frequency  Fundamental Frequency for the voice - default is 1330 Hz.  
+
+     -v            Verbose output- print a lot of stuff to the screen while
+                   doing the conversion. 
+
+      <filename    get text to say from file filename, otherwise takes 
+                   stuff to say from command line.  If there is no text
+                   on the command line, and no text redirected into 
+                   SAY.EXE, Then Say will takes it's text to convert 
+                   from stdin.
+
+Mkdictdb.exe:
+dlookup.exe :
+
+I have not included a dictionary or a dictionary database in the distrib-
+ution.  Say will work without it, but is more accurate in pronunciation 
+with one.  Read the README file for information as to where to find 
+American English and British English dictionaries and how to convert them 
+using mkdictdb.exe. I have placed the ASCII version of the source diction-
+ary I am using on my web site, http://www.cris.com/~djd/products.html,
+for your convenience as well. This will need to be converted by MkDictdb.  
+These dictionaries are in a fairly simple ASCII format, so it is pretty 
+easy to modify or add words to them.  So, for instance, the word 
+"LuxuryYacht" could actually be pronounced Throat-Wobbler-Mangrove, or you 
+could do horrible things to the pronunciation of the word "Microsoft". 
+Or you could actually do something useful with it - your choice.
+
+Be warned that the resulting Dictionary file is fairly large.  Say.exe 
+looks for a dictionary file in the $ETC directory named Adict.db
+by default.  The command line switch -d b causes it to look for the 
+alternate dictionary bdict.db.
+
+You should also be warned that the conversion process can take several 
+hours, and that MkDictDB is poorly designed in that it has no progress
+meter.  
+
+Once you've made the dictionary, say.exe will look for it in your 
+$ETC directory, so it would be useful to move it there.  
+
+The sayrc file
+
+This distribution includes a file named sayrc, useful for changing
+the parameters for the Klatt Synthesizer.  SAY.EXE will look for 
+this file in the $HOME directory, and load the parameters from it
+if found. If SAY cannot find this file, it will use it's default 
+parameters.  Please respect the format and order of the sayrc file,
+as the algorithm used to read this file is other than robust.
+
+What do the parameters mean?  That's a good question - and one for 
+a tutorial on Speech Synthesis with the Klatt synthesizer, and 
+way beyond what can be adequately covered in a README file.  If
+you find such a tutorial, I'd like to know about it.  The sayrc 
+file option is included here to give the end user a chance to 
+improve the quality of RSynth's speech noises - if you come up 
+with a wonderful, unusual, or merely interesting sayrc, I'd
+like to see it.  
+ 
+Notes for Programmers:
+
+Everything here compiles under EMX/GCC, using Gnumake as the make utility.
+You will also need to have GNU GDBM ported over to OS/2 - I highly 
+recommend Kai Uwe Rommel's port, which can currently be found on
+ftp.leo.org. Your mileage may vary with other development environments.
+
+There has been at least one person who has sucessfully recompiled  Rsynth
+with IBM Cset. I tried here (not very hard) with some success, but had
+difficulties with the port of GDBM.  So, this version is still on EMX.
+
+Stuff that needs to be done:
+
+Floating Point Underflow problem
+
+This has been a real bugbear to fix - I hope I have it fixed now.  If you
+get floating point underflow exceptions with say.exe Please Email Me!
+
+Creating a Speech Output Library
+
+It should be fairly easy to take functions from say.c and create a speech 
+output API - speech_init(), Say_string(), say_file(), Speech_close() would 
+be a minimal function set.  Then put 'em in a DLL. Any Takers?
+
+Mods to Improve Speech Output Quality
+
+The support for sample rates other than 8000 helps. Raw data created by 
+Rsynth is 16 bit, so adding a switch for 16 bit support, and updating the 
+audio_init, audio_play, was definately a  worthwhile thing to do - the 
+sound quality at 16 bit is greatly improved.
+
+It would be nice to figure out how to make 16 bit WAV files as well.
+
+Derek J Decker         djd@cris.com 
+
